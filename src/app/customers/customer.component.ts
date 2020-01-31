@@ -39,7 +39,13 @@ export class CustomerComponent implements OnInit {
       phone: '',
       rating: [5, ratingRangeFromXToY(1, 5)],
       notification: 'email',
-      sendCatalog: true
+      sendCatalog: true,
+      addressType: 'home',
+      street1: '',
+      street2: '',
+      city: '',
+      state: '',
+      zip: ''
     });
   }
 
