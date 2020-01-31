@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Customer } from './customer';
+import { ratingRangeFrom1To5 } from '../number-validator';
 
 @Component({
   selector: 'app-customer',
@@ -21,6 +22,7 @@ export class CustomerComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email]],
       phone: '',
+      rating: [5, ratingRangeFrom1To5],
       notification: 'email',
       sendCatalog: true
     });
