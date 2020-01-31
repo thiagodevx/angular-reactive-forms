@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';
 
 import { Customer } from './customer';
 import { ratingRangeFromXToY } from '../number-validator';
@@ -40,7 +40,7 @@ export class CustomerComponent implements OnInit {
       rating: [5, ratingRangeFromXToY(1, 5)],
       notification: 'email',
       sendCatalog: true,
-      addresses: this.buildAddressFormGroup()
+      addresses: this.fb.array([this.buildAddressFormGroup()])
     });
   }
 
@@ -95,5 +95,9 @@ export class CustomerComponent implements OnInit {
   save() {
     console.log(this.customerForm);
     console.log('Saved: ' + JSON.stringify(this.customerForm.value));
+  }
+
+  get addresses(): FormArray {
+    return this.customerForm.get('addresses') as FormArray;
   }
 }
