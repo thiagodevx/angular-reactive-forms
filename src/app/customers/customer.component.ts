@@ -40,12 +40,18 @@ export class CustomerComponent implements OnInit {
       rating: [5, ratingRangeFromXToY(1, 5)],
       notification: 'email',
       sendCatalog: true,
+      addresses: this.buildAddressFormGroup()
+    });
+  }
+
+  buildAddressFormGroup(): FormGroup {
+    return this.fb.group({
       addressType: 'home',
-      street1: '',
-      street2: '',
-      city: '',
-      state: '',
-      zip: ''
+        street1: '',
+        street2: '',
+        city: '',
+        state: '',
+        zip: ''
     });
   }
 
