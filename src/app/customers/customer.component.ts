@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 
 import { Customer } from './customer';
 import { ratingRangeFromXToY } from '../number-validator';
 import { compareEmails } from '../email-validator';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-customer',
@@ -14,10 +15,20 @@ export class CustomerComponent implements OnInit {
 
   customerForm: FormGroup;
   customer = new Customer();
+  emailMessage: string;
+  validationMessages = {
+    required: 'Please entenr your email address.',
+    email: 'Please inform a valid email address.'
+  };
 
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.initializeForm();
+    this.addFormControlEvents();
+  }
+
+  initializeForm() {
     this.customerForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(3)]],
       lastName: ['', [Validators.required, Validators.maxLength(50)]],
@@ -30,6 +41,24 @@ export class CustomerComponent implements OnInit {
       notification: 'email',
       sendCatalog: true
     });
+  }
+
+  addFormControlEvents() {
+    this.customerForm.get('notification').valueChanges.subscribe( value => {
+      this.setNotification(value);
+    });
+
+    const emailControl = this.customerForm.get('emailGroup.email');
+    emailControl.valueChanges.pipe(debounceTime(1000)).subscribe( value => this.setMessage(emailControl));
+  }
+
+  setMessage(control: AbstractControl): void {
+    this.emailMessage = '';
+    if ( (control.touched || control.dirty) && control.errors) {
+      console.log(this.validationMessages);
+      const errors = Object.keys(control.errors);
+      this.emailMessage = errors.map(error => this.validationMessages[error]).join(' ');
+    }
   }
 
   populateTestData(): void {
