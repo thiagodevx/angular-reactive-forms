@@ -25,7 +25,7 @@ export class CustomerComponent implements OnInit {
   }
 
   populateTestData(): void {
-    this.customerForm.setValue({
+    this.customerForm.patchValue({
       firstName: 'Jack',
       lastName: 'Harkness',
       sendCatalog: false,
