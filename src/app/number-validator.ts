@@ -21,7 +21,7 @@ export const ratingRangeFromXToY = (min: number, max: number): ValidatorFn => {
     } else {
       return null;
     }
-  }
+  };
 };
 
 

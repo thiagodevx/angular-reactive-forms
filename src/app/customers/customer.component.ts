@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Customer } from './customer';
-import { ratingRangeFrom1To5, ratingRangeFromXToY } from '../number-validator';
+import { ratingRangeFromXToY } from '../number-validator';
+import { compareEmails } from '../email-validator';
 
 @Component({
   selector: 'app-customer',
@@ -20,7 +21,10 @@ export class CustomerComponent implements OnInit {
     this.customerForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(3)]],
       lastName: ['', [Validators.required, Validators.maxLength(50)]],
-      email: ['', [Validators.required, Validators.email]],
+      emailGroup: this.fb.group({
+        email: ['', [Validators.required, Validators.email]],
+        confirmEmail: ['', [Validators.required]]
+      }, {validator: compareEmails}),
       phone: '',
       rating: [5, ratingRangeFromXToY(1, 5)],
       notification: 'email',
