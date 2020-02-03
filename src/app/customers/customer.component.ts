@@ -47,12 +47,16 @@ export class CustomerComponent implements OnInit {
   buildAddressFormGroup(): FormGroup {
     return this.fb.group({
       addressType: 'home',
-        street1: '',
-        street2: '',
-        city: '',
-        state: '',
-        zip: ''
+      street1: '',
+      street2: '',
+      city: '',
+      state: '',
+      zip: ''
     });
+  }
+
+  addAddress() {
+    this.addresses.push(this.buildAddressFormGroup());
   }
 
   addFormControlEvents() {
