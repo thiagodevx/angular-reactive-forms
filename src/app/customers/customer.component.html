@@ -251,6 +251,9 @@
             </div>
           </div>
         </div>
+        <button class="btn btn-outline-primary" (click)="addAddress()" type="button" [disabled]="!addresses.valid">
+          Add Another Address
+        </button>
       </div>
 
       <div class="form-group row mb-2">
